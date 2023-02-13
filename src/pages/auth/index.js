@@ -1,8 +1,12 @@
 import React from 'react'
+import SignUpForm from '../../components/signup_form'
 
 const Auth = () => {
   return (
-    <div>Auth</div>
+    <section>
+      <h1>Auth Page</h1>
+      <SignUpForm />
+    </section>
   )
 }
 
