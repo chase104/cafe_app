@@ -26,6 +26,14 @@ app.get('/test_route', (req, res) => {
     res.send("good route!")
 })
 
+app.post('/api/users', (req, res) => {
+    console.log(req.body);
+    // doing authentication here
+
+    // sending user response after creation or login
+    res.json("good route")
+})
+
 // catch all route
 app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
