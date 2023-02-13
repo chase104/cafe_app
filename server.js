@@ -3,8 +3,8 @@ const path = require('path');
 const logger = require('morgan');
 // cross origin access 
 const cors = require('cors');
-
-
+require('dotenv').config();
+require('./config/database.js')
 
 const app = express();
 
@@ -26,9 +26,7 @@ app.get('/test_route', (req, res) => {
     res.send("good route!")
 })
 
-
-
-
+// catch all route
 app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
