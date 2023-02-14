@@ -28,7 +28,7 @@ app.get('/test_route', (req, res) => {
     res.send("good route!")
 })
 
-app.post('/api/users/signup',async (req, res) => {
+app.post('/users/signup',async (req, res) => {
     console.log(req.body);
     let hashedPassword = await bcrypt.hash(req.body.password, 10)
     console.log(hashedPassword);
@@ -42,6 +42,11 @@ app.post('/api/users/signup',async (req, res) => {
     // sending user response after creation or login
     res.json("user created")
 });
+
+
+app.put('/users/login', async (req, res) => {
+    console.log(req.body);
+})
 
 // catch all route
 app.get('/*', (req, res) => {
