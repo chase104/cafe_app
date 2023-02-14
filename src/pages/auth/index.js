@@ -1,11 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react'
 import SignUpForm from '../../components/signup_form'
+import Login from '../../components/login_form'
+import './index.css';
 
 const Auth = () => {
+  const [isSignup, setIsSignup] = useState(true);
+
+  const handleButtonClick = () => {
+    isSignup ? setIsSignup(false) : setIsSignup(true);
+  }
+
   return (
-    <section>
-      <h1>Auth Page</h1>
+    <section className="auth-page">
+      <div className="logo-container">
+        <div>Logo</div>
+        <div className="login-button" onClick={handleButtonClick}>{isSignup ? "Login" : "Sign up"}</div>
+      </div>
+      
+      {isSignup ?
       <SignUpForm />
+      :
+      <Login />
+      }
+      
     </section>
   )
 }
