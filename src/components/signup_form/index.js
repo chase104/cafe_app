@@ -15,19 +15,17 @@ export default class SignUpForm extends Component {
             [propertyName]: event.target.value,
             error: ''
         });
-      }
+      };
       handleSubmit = async (event) => {
         event.preventDefault(); // do not refresh the page
         console.log("submitting!");
-        // let response = await signUp();
-        // object {}
+        // check if password has special character (error handling)
         let data = {...this.state};
         delete data.confirm;
         delete data.error;
  
         let response = await signUp(data);
         console.log(response);
-
 
         // make async call to server with the data
         // in a different file - we will bring in that function here
