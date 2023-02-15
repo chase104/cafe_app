@@ -17,7 +17,7 @@ export const logIn = async (formData) => {
             url: "/users/login",
             data: formData
         });
-
+        console.log(serverResponse);
     return serverResponse;
 }
 

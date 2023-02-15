@@ -4,12 +4,16 @@ const localStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 
 module.exports = async function(passport) {
+  
     // 1 use the local strategy
     // email and password checking 
     passport.use(
         new localStrategy({usernameField: "email"}, async (email, password, done) => {
             // check if user with this email exists
-            const user = User.findOne({email: email});
+            console.log("in strategy");
+            // await user here
+            const user = await User.findOne({email: email});
+            console.log("got user", user);
             if (!user) {
                 return done(null, false, {message: "Email or password incorrect"});
             }
@@ -23,9 +27,8 @@ module.exports = async function(passport) {
                     return done(null, false, {message: "Email or password incorrect"})
                 }
             })
-    
         })
-    )
+    );
 
     // 2. add seralize function to passport library
     // place use in a session
@@ -39,4 +42,4 @@ module.exports = async function(passport) {
     passport.deserializeUser(async (id, cb) => {
         return cb(null, await User.findById(id))
     });
-}
+};

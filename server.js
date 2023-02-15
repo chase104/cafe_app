@@ -42,7 +42,10 @@ initializePassport(
 
 app.use(session({
     secure: true,
-    secret: 
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true,
+    cookie: { originalMaxAge: 3600000 }
 }))
 
 
@@ -69,9 +72,25 @@ app.post('/users/signup',async (req, res) => {
 });
 
 
-app.put('/users/login', async (req, res) => {
+app.put('/users/login', async (req, res, next) => {
     console.log(req.body);
     // passport authentication
+    passport.authenticate("local", (err, user) => {
+        if (err) throw err;
+        if (!user) {
+            res.json({
+                message: "login failed",
+                user: false
+            })
+        } else {
+            req.logIn(user, err => {
+                res.json({
+                    message: "successfully authenticated",
+                    user
+                })
+            })
+        }
+    })(req, res, next)
 })
 
 // catch all route
