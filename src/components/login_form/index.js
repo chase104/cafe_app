@@ -1,33 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { logIn } from '../../utilities/user-functions.js'
+import { logIn, getUserFromSession } from '../../utilities/user-functions.js'
 import axios from 'axios'
 
 
-
-const Login = () => {
+const Login = ({setUser}) => {
   
     const [formState, setFormState] = useState({email: '', password: ''});
     const [error, setError] = useState("");
-    const [disabled, setDisabled] = useState(true)
+    const [disabled, setDisabled] = useState(true);
+
     useEffect(() => {
         setDisabled(formState.email && formState.password ? false : true);
     }, [formState])
-
-    // useEffect(() => {
-    //   let asyncCall = async () => {
-    //     let res = await axios("/session-info")
-    //     console.log(res.data);
-    //   }
-    //   asyncCall()
-    // }, [])
-
-    useEffect(() => {
-      let getSessionInfo = async () => {
-        let res = await axios('/session-info')
-        console.log(res);
-      }
-      getSessionInfo()
-    }, [])
 
 
     const handleChange = (event) => {
@@ -39,10 +23,13 @@ const Login = () => {
       };
 
     const handleSubmit = async (e) => {
+      // LOGIN
         // make a call to the server with this info and authenticate!
         e.preventDefault();
-        let response = await logIn(formState);
-
+        await logIn(formState);
+        // get session info (user)
+        let user = await getUserFromSession()
+        setUser(user)
     }
 
   return (
