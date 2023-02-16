@@ -11,8 +11,7 @@ import Nav from './components/nav';
 function App() {
 
   const [user, setUser] = useState(null);
-  
-// {_id: "241234132414", name: "Chase", orders: ["fweer234231234"]}
+
   return (
     <div className="App">
       { user ? 
