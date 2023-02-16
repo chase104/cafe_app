@@ -43,6 +43,7 @@ initializePassport(
 app.use(session({
     secure: true,
     secret: process.env.SESSION_SECRET,
+
     resave: true,
     saveUninitialized: true,
     cookie: { originalMaxAge: 3600000 }
@@ -55,6 +56,14 @@ app.use(express.static(path.join(__dirname, 'build')));
 app.get('/test_route', (req, res) => {
     res.send("good route!")
 })
+
+
+app.get('/session-info', (req, res) => {
+    res.json({
+        session: req.session
+    });
+});
+
 
 app.post('/users/signup',async (req, res) => {
     console.log(req.body);
@@ -75,7 +84,8 @@ app.post('/users/signup',async (req, res) => {
 app.put('/users/login', async (req, res, next) => {
     console.log(req.body);
     // passport authentication
-    passport.authenticate("local", (err, user) => {
+    passport.authenticate("local", (err, user, message) => {
+        console.log(message);
         if (err) throw err;
         if (!user) {
             res.json({
@@ -83,14 +93,16 @@ app.put('/users/login', async (req, res, next) => {
                 user: false
             })
         } else {
+            // delete user.password;
             req.logIn(user, err => {
+                if (err) throw err;
                 res.json({
                     message: "successfully authenticated",
-                    user
+                    // remove user
                 })
             })
         }
-    })(req, res, next)
+    })(req, res, next);
 })
 
 // catch all route

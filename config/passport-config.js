@@ -22,7 +22,7 @@ module.exports = async function(passport) {
                 if (err) throw err;
                 if (isMatch) {
                     // if yes, return that user
-                    return done(null, user);
+                    return done(null, user, {message: "Found user - passwords match"});
                 } else {
                     return done(null, false, {message: "Email or password incorrect"})
                 }
