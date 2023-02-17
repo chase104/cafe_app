@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { logIn, getUserFromSession } from '../../utilities/user-functions.js'
 import axios from 'axios'
+import { AppContext } from '../../contexts/app_context.js';
 
+const Login = () => {
 
-const Login = ({setUser}) => {
-  
+    let { setUser } = useContext(AppContext);
+
     const [formState, setFormState] = useState({email: '', password: ''});
     const [error, setError] = useState("");
     const [disabled, setDisabled] = useState(true);
+
 
     useEffect(() => {
         setDisabled(formState.email && formState.password ? false : true);

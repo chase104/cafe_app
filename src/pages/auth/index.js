@@ -3,9 +3,7 @@ import SignUpForm from '../../components/signup_form'
 import Login from '../../components/login_form'
 import './index.css';
 
-const Auth = (props) => {
-  let { setUser } = props;
-  // let setUser = props.setUser;
+const Auth = () => {
   const [isSignup, setIsSignup] = useState(true);
 
   const handleButtonClick = () => {
@@ -22,7 +20,7 @@ const Auth = (props) => {
       {isSignup ?
       <SignUpForm />
       :
-      <Login setUser={setUser}/>
+      <Login />
       }
       
     </section>
