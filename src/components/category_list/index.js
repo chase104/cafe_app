@@ -1,9 +1,36 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { AppContext } from '../../contexts/app_context'
 import './index.css'
-const CategoryList = () => {
+
+const CategoryList = ({categories}) => {
+  const { activeCat, setActiveCat } = useContext(AppContext);
+  // let categories = props.categories;
+  // when we render, we want to grab that array
+  console.log(activeCat);
+
+  const handleCatClick = (cat) => {
+    setActiveCat(cat.name)
+  }
+
+  let categoriesJSX = categories.map((cat) => {
+    return (
+      <li 
+      key={cat._id}
+      className={cat.name === activeCat ? "active" : ''}
+      onClick={() => handleCatClick(cat)}
+      >{cat.name}</li>
+    )
+  })
+
+
+  // grab our categories
   
+
   return (
-    <div>CategoryList</div>
+    <ul className="CategoryList">
+      {/* a bunch of li tags with our categories */}
+      {categoriesJSX}
+    </ul>
   )
 }
 

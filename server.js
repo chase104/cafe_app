@@ -5,6 +5,7 @@ const logger = require('morgan');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
 const User = require('./models/user.js');
+const Category = require('./models/category')
 
 const passport = require('passport');
 const session = require('express-session');
@@ -51,6 +52,12 @@ app.use(session({
 
 // server build folder
 app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('/get_categories', async (req, res) => {
+    let arrayOfCategories = await Category.find();
+    console.log(arrayOfCategories);
+    res.json(arrayOfCategories)
+})
 
 app.get('/test_route', (req, res) => {
     res.send("good route!")

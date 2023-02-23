@@ -8,15 +8,15 @@ const AppContextProvider = (props) => {
 
     const [user, setUser] = useState(true);
     const [stuff, setStuff] = useState("This is some stuff")
-
+    const [activeCat, setActiveCat] = useState('Sandwiches')
  
     return (
         <AppContext.Provider value={{
-            user,
-            setUser,
+            user, setUser,
 
-            stuff, 
-            setStuff
+            stuff, setStuff,
+
+            activeCat, setActiveCat
         }}>
             {props.children}
         </AppContext.Provider>
