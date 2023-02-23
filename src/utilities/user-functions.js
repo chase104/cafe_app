@@ -30,7 +30,7 @@ export const getUserFromSession = async () => {
       let user = response.data.session.passport.user;
       return user;
     } else {
-        return false
+    return false
     }
 }
 

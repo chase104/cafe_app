@@ -8,6 +8,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import Nav from './components/nav';
 import { getUserFromSession } from './utilities/user-functions';
 import { AppContext } from './contexts/app_context';
+import Loader from "react-js-loader";
 
 function App() {
 
@@ -48,7 +49,7 @@ function App() {
       )
     } else {
       return <div>
-        loading....
+        <Loader />
       </div>
     }
   }
