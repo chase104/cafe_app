@@ -1,10 +1,17 @@
 import React, { useContext } from 'react'
 import { AppContext } from '../../contexts/app_context'
 import MenuListItem from '../menu_list_item';
+import './index.css'
 
 const MenuList = () => {
     const { activeCat, items } = useContext(AppContext);
     console.log(items);
+
+    // let itemSubset;
+    // items.forEach((item) => {
+        // if cat
+    //     itemSubset.push()
+    // })
 
     let itemsJSX = items.map((item) => {
         // check if this item is the same as active category
@@ -13,13 +20,15 @@ const MenuList = () => {
         // if ("Drinks" === "Drinks")
         if (item.category.name === activeCat) {
             return (
-                <MenuListItem itemData={item}/>
+                <MenuListItem itemData={item} key={item._id}/>
             )
+        } else {
+            return null
         }
     })
 
   return (
-    <div>{itemsJSX}</div>
+    <div className="MenuList">{itemsJSX}</div>
   )
 }
 
