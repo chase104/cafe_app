@@ -12,9 +12,12 @@ const Nav = () => {
   
   let [categories, setCategories] = useState([]);
 
+  let [isAdmin, setIsAdmin] = useState(null)
+
   const location = useLocation().pathname;
   console.log(location);
 
+  
   useEffect(() => {
     const getCategories = async () => {
      let res = await axios(`/get_categories`)

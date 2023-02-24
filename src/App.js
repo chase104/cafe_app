@@ -9,12 +9,13 @@ import Nav from './components/nav';
 import { getUserFromSession } from './utilities/user-functions';
 import { AppContext } from './contexts/app_context';
 import Loader from "react-js-loader";
+import axios from 'axios';
 
 function App() {
 
   const [callWasMade, setCallWasMade] = useState(true);
 
-  let { user, setUser } = useContext(AppContext);
+  let { user, setUser, setItems } = useContext(AppContext);
 
   // this will only run when we first open our app, or refresh the page
 
@@ -28,6 +29,18 @@ function App() {
   //     getSession();
 
   // }, []);
+
+
+  // get items and set in context
+  useEffect(() => {
+    const getItems = async () => {
+      let response = await axios('/get_items')
+      console.log(response);
+      let items = response.data;
+      setItems(items)
+    }
+    getItems()
+  }, [])
 
   const returnPage = () => {
     if (callWasMade) {

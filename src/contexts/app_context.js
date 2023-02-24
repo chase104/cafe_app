@@ -7,14 +7,14 @@ const AppContextProvider = (props) => {
     // put our state
 
     const [user, setUser] = useState(true);
-    const [stuff, setStuff] = useState("This is some stuff")
-    const [activeCat, setActiveCat] = useState('Sandwiches')
+    const [items, setItems] = useState([]);
+    const [activeCat, setActiveCat] = useState('Sandwiches');
  
     return (
         <AppContext.Provider value={{
             user, setUser,
 
-            stuff, setStuff,
+            items, setItems,
 
             activeCat, setActiveCat
         }}>

@@ -4,8 +4,11 @@ const logger = require('morgan');
 // cross origin access 
 const cors = require('cors');
 const bcrypt = require('bcrypt');
+
+// MODELS //
 const User = require('./models/user.js');
 const Category = require('./models/category')
+const Item = require('./models/item')
 
 const passport = require('passport');
 const session = require('express-session');
@@ -57,6 +60,13 @@ app.get('/get_categories', async (req, res) => {
     let arrayOfCategories = await Category.find();
     console.log(arrayOfCategories);
     res.json(arrayOfCategories)
+})
+
+app.get('/get_items', async (req, res) => {
+    // when we have references in our Schemas, we can use the populate method to get that data
+    let arrayOfItems = await Item.find().populate('category');
+    console.log(arrayOfItems);
+    res.json(arrayOfItems)
 })
 
 app.get('/test_route', (req, res) => {

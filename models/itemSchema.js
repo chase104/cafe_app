@@ -7,7 +7,7 @@ const itemSchema = new Schema({
     name: { type: String, required: true },
     emoji: String,
     // example of document referencing
-    category: { type: Schema.Types.ObjectId, ref: 'categories' },
+    category: { type: Schema.Types.ObjectId, ref: 'Category' },
     price: { type: Number, required: true, default: 0 }
 }, {timestamps: true})
 
