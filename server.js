@@ -96,11 +96,6 @@ app.post('/users/signup',async (req, res) => {
     res.json("user created")
 });
 
-app.get("/get_cart", async (req, res) => {
-    // get cart/order from database
-    let cart = await Order.getCart(req.session.passport.user._id);
-    console.log(cart);
-})
 
 app.put('/users/login', async (req, res, next) => {
     console.log(req.body);
@@ -124,6 +119,23 @@ app.put('/users/login', async (req, res, next) => {
             })
         }
     })(req, res, next);
+})
+
+app.get("/get_cart", async (req, res) => {
+    // get cart/order from database
+    console.log(req.session);
+    let cart = await Order.getCart(req.session.passport.user._id);
+    console.log(cart);
+    res.json(cart)
+})
+
+app.put('/add_to_cart/:itemId/:newQty', async (req, res) => {
+    let { itemId, newQty } = req.params;
+
+    let cart = await Order.getCart(req.session.passport.user._id);
+
+    cart.orderItems.find(orderItem => orderItem._id.equals(itemId))
+    // check if this item already exists in the array
 })
 
 // catch all route

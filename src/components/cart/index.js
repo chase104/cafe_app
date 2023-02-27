@@ -1,16 +1,17 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { AppContext } from '../../contexts/app_context';
 
 const Cart = ({handleChangeQty, handleCheckout}) => {
     // handleChangeQuantity to add something to cart, change qty, or remove is qty <= 0
     // handleCheckout
     // checkoutDone == false
+    let { cart } = useContext(AppContext)
 
-    let checkoutDone = false;
 
   return (
     <div className="Cart">
         <div className='SectionHeading'>
-            {checkoutDone ?
+            {cart.checkoutDone ?
             <>
                 <span>ORDER  <span>D442DGF</span></span>
                 <span>date of order</span> 
@@ -26,7 +27,7 @@ const Cart = ({handleChangeQty, handleCheckout}) => {
         <div className="OrderItemContainer">
             {/* various order items here */}
             <section>
-                {checkoutDone ? 
+                {cart.checkoutDone ? 
                 <span>TOTAL</span>
                 :
                 <button className="btn-sm">Checkout</button>    

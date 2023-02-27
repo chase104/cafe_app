@@ -15,7 +15,7 @@ function App() {
 
   const [callWasMade, setCallWasMade] = useState(false);
 
-  let { user, setUser, setItems } = useContext(AppContext);
+  let { user, setUser, setItems, setCart } = useContext(AppContext);
 
   // this will only run when we first open our app, or refresh the page
 
@@ -56,6 +56,7 @@ function App() {
             url: "/get_cart"
           })
           console.log(response);
+          setCart(response.data)
       }
     }
     getCart()

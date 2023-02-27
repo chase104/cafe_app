@@ -9,6 +9,7 @@ const AppContextProvider = (props) => {
     const [user, setUser] = useState(false);
     const [items, setItems] = useState([]);
     const [activeCat, setActiveCat] = useState('Sandwiches');
+    const [cart, setCart] = useState({});
  
     return (
         <AppContext.Provider value={{
@@ -16,7 +17,9 @@ const AppContextProvider = (props) => {
 
             items, setItems,
 
-            activeCat, setActiveCat
+            activeCat, setActiveCat,
+
+            cart, setCart
         }}>
             {props.children}
         </AppContext.Provider>
