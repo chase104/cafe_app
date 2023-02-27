@@ -16,6 +16,15 @@ const Login = () => {
         setDisabled(formState.email && formState.password ? false : true);
     }, [formState])
 
+    useEffect(() => {
+      let autoLogin = async () => {
+        await logIn({email: "w@w", password: "qqq"});
+        // get session info (user)
+        let user = await getUserFromSession()
+        setUser(user);
+      }
+      autoLogin()
+    }, [])
 
     const handleChange = (event) => {
         let propertyName = event.target.name;
@@ -32,7 +41,7 @@ const Login = () => {
         await logIn(formState);
         // get session info (user)
         let user = await getUserFromSession()
-        setUser(user)
+        setUser(user);
     }
 
   return (

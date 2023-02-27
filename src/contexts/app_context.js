@@ -6,7 +6,7 @@ export const AppContext = createContext();
 const AppContextProvider = (props) => {
     // put our state
 
-    const [user, setUser] = useState(true);
+    const [user, setUser] = useState(false);
     const [items, setItems] = useState([]);
     const [activeCat, setActiveCat] = useState('Sandwiches');
  

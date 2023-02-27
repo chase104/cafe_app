@@ -9,6 +9,7 @@ const bcrypt = require('bcrypt');
 const User = require('./models/user.js');
 const Category = require('./models/category')
 const Item = require('./models/item')
+const Order = require('./models/order')
 
 const passport = require('passport');
 const session = require('express-session');
@@ -58,14 +59,13 @@ app.use(express.static(path.join(__dirname, 'build')));
 
 app.get('/get_categories', async (req, res) => {
     let arrayOfCategories = await Category.find();
-    console.log(arrayOfCategories);
     res.json(arrayOfCategories)
 })
 
 app.get('/get_items', async (req, res) => {
     // when we have references in our Schemas, we can use the populate method to get that data
     let arrayOfItems = await Item.find().populate('category');
-    console.log(arrayOfItems);
+
     res.json(arrayOfItems)
 })
 
@@ -82,20 +82,25 @@ app.get('/session-info', (req, res) => {
 
 
 app.post('/users/signup',async (req, res) => {
-    console.log(req.body);
+
     let hashedPassword = await bcrypt.hash(req.body.password, 10)
-    console.log(hashedPassword);
+
     // use User model to place user in the database
     let userFromCollection = await User.create({
         email: req.body.email,
         name: req.body.name,
         password: hashedPassword
     })
-    console.log(userFromCollection);
+
     // sending user response after creation or login
     res.json("user created")
 });
 
+app.get("/get_cart", async (req, res) => {
+    // get cart/order from database
+    let cart = await Order.getCart(req.session.passport.user._id);
+    console.log(cart);
+})
 
 app.put('/users/login', async (req, res, next) => {
     console.log(req.body);
@@ -109,7 +114,7 @@ app.put('/users/login', async (req, res, next) => {
                 user: false
             })
         } else {
-            // delete user.password;
+            // delete user.password
             req.logIn(user, err => {
                 if (err) throw err;
                 res.json({

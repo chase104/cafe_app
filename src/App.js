@@ -13,22 +13,23 @@ import axios from 'axios';
 
 function App() {
 
-  const [callWasMade, setCallWasMade] = useState(true);
+  const [callWasMade, setCallWasMade] = useState(false);
 
   let { user, setUser, setItems } = useContext(AppContext);
 
   // this will only run when we first open our app, or refresh the page
 
-  // useEffect(() => {
-  //   const getSession =  async () => {
+  // get user
+  useEffect(() => {
+    const getSession =  async () => {
 
-  //     let userResponse = await getUserFromSession();
-  //     setUser(userResponse)
-  //     setCallWasMade(true)
-  //   }
-  //     getSession();
+      let userResponse = await getUserFromSession();
+      setUser(userResponse)
+      setCallWasMade(true)
+    }
+      getSession();
 
-  // }, []);
+  }, []);
 
 
   // get items and set in context
@@ -41,6 +42,24 @@ function App() {
     }
     getItems()
   }, [])
+
+
+
+  // get cart
+
+  useEffect(() => {
+    const getCart = async () => {
+      if (user) {
+        // make call to database to get order
+        let response = await axios({
+            method: "GET",
+            url: "/get_cart"
+          })
+          console.log(response);
+      }
+    }
+    getCart()
+  }, [user])
 
   const returnPage = () => {
     if (callWasMade) {

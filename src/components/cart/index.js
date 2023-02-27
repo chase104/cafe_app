@@ -35,7 +35,6 @@ const Cart = ({handleChangeQty, handleCheckout}) => {
                 <span className="right">Order Total Price</span>
             </section>
         </div>
-
     </div>
   )
 }

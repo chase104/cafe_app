@@ -12,7 +12,7 @@ module.exports = async function(passport) {
             // check if user with this email exists
             console.log("in strategy");
             // await user here
-            const user = await User.findOne({email: email});
+            const user = await User.findOne({email: email})
             console.log("got user", user);
             if (!user) {
                 return done(null, false, {message: "Email or password incorrect"});
@@ -22,6 +22,7 @@ module.exports = async function(passport) {
                 if (err) throw err;
                 if (isMatch) {
                     // if yes, return that user
+ 
                     return done(null, user, {message: "Found user - passwords match"});
                 } else {
                     return done(null, false, {message: "Email or password incorrect"})
