@@ -56,3 +56,8 @@
     padding: 0.6vmin;
     text-align: center;
 }
+.OrderItemContainer section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

@@ -155,14 +155,42 @@ app.put('/add_to_cart/:itemId', async (req, res) => {
     res.send(cart)
 })
 
-// app.put('/add_to_cart/:itemId/:newQty', async (req, res) => {
-//     let { itemId, newQty } = req.params;
+app.put('/change_qty', async (req, res) => {
+    let { itemId, newQty } = req.body;
+    let userId = req.session.passport.user._id;
+    console.log(itemId, newQty, userId);
 
-//     let cart = await Order.getCart(req.session.passport.user._id);
+    let cart = await Order.getCart(userId); // checkoutDone false
+    const orderItem = cart.orderItems.find(orderItem => {
+        console.log(orderItem.item, itemId);
+        if (orderItem.item._id.equals(itemId)) {
+            return orderItem
+        }
+        
+    })
+    console.log(orderItem);
+    orderItem.qty = newQty;
 
-//     cart.orderItems.find(orderItem => orderItem._id.equals(itemId))
-//     // check if this item already exists in the array
-// })
+    // check if qty is 0
+    if (orderItem.qty === 0) {
+        orderItem.remove();
+    }
+
+    cart.save()
+
+    res.send(cart)
+})
+
+
+app.put("/checkout", async (req, res) => {
+    let cart = await Order.getCart(req.session.passport.user._id);
+
+    cart.checkoutDone = true;
+    cart.save()
+
+    res.send(cart)
+
+})
 
 // catch all route
 app.get('/*', (req, res) => {

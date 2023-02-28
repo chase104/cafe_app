@@ -1,11 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './index.css';
+import axios from 'axios'
+import { AppContext } from '../../contexts/app_context';
 
 const CartItem = ({cartItem, checkoutDone}) => {
     console.log(cartItem, checkoutDone);
 
-    const handleChangeQty = () => {
+    const { setCart } = useContext(AppContext)
 
+    const handleChangeQty = async (itemId, newQty) => {
+        let response = await axios({
+            method: "PUT",
+            url: "/change_qty",
+            data: {
+                itemId,
+                newQty,
+            }
+        })
+        console.log(response);
+        setCart(response.data);
     }
 
     return (
@@ -19,7 +32,7 @@ const CartItem = ({cartItem, checkoutDone}) => {
             {!checkoutDone ?
               <button
                 className="btn-xs"
-                onClick={() => handleChangeQty(cartItem._id, cartItem.qty - 1)}
+                onClick={() => handleChangeQty(cartItem.item._id, cartItem.qty - 1)}
               >−</button>
               : 
               null
@@ -28,7 +41,7 @@ const CartItem = ({cartItem, checkoutDone}) => {
             {!checkoutDone ?
               <button
                 className="btn-xs"
-                onClick={() => handleChangeQty(cartItem._id, cartItem.qty + 1)}
+                onClick={() => handleChangeQty(cartItem.item._id, cartItem.qty + 1)}
               >+</button>
               : 
               null

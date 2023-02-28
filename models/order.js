@@ -15,7 +15,7 @@ const orderItemSchema = new Schema({
 orderItemSchema.virtual('totPrice').get(function() {
     console.log(this);
     return this.qty * this.item.price;
-})
+});
 
 // order Schema
 
@@ -28,28 +28,39 @@ const orderSchema = new Schema({
     toJSON: {virtuals: true}
 })
 
-// orderSchema.virtual('orderTotal').get(() => {
-//     // go through orderItems array and add together the totprices
-//     // reduce method is a good easy way to sum an array
-//     return 
-// })
+orderSchema.virtual('orderTotal').get(function() {
+    // go through orderItems array and add together the totprices
+    // reduce method is a good easy way to sum an array
+
+    let accumulatedTotal = this.orderItems.reduce((total, item) => {
+        return total + item.totPrice;
+    }, 0)
+
+    return +accumulatedTotal.toFixed(2);
+})
+
+orderSchema.virtual('totalQty').get(function() {
+    // go through orderItems array and add together the totprices
+    // reduce method is a good easy way to sum an array
+
+    let accumulatedTotal = this.orderItems.reduce((total, item) => {
+        return total + item.qty;
+    }, 0)
+
+    return accumulatedTotal;
+})
+
+
+
 
 orderSchema.statics.getCart = function(userId) {
-    // get cart with checkoutDone: false
-    // if there is not checkoutDone: false cart, make one
-
-
-    // option 1
-    // check if exists this.findone
-    // if doesn't exist do this.create
-
-    // option 2 findOneAndUpdate
-    // if no instance is found we can make it
     return this.findOneAndUpdate(
         {user: userId, checkoutDone: false},
         {user: userId},
         { upsert: true, new: true }
     )
 }
+
+
 
 module.exports = mongoose.model('Order', orderSchema);
