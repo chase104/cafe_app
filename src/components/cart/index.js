@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { AppContext } from '../../contexts/app_context';
 import CartItem from '../cart_item';
+import './index.css'
 
 const Cart = ({handleChangeQty, handleCheckout}) => {
     // handleChangeQuantity to add something to cart, change qty, or remove is qty <= 0
@@ -10,12 +11,12 @@ const Cart = ({handleChangeQty, handleCheckout}) => {
 
     console.log(cart.orderItems);
 
-    let orderItemsJSX = cart.orderItems.map((item) => {
-        return <CartItem item={item} checkoutDone={cart.checkoutDone} />
+    let orderItemsJSX = cart.orderItems.map((cartItem) => {
+        return <CartItem cartItem={cartItem} checkoutDone={cart.checkoutDone} />
     })
 
   return (
-    <div className="Cart">
+    <div className="OrderDetail">
         <div className='SectionHeading'>
             {cart.checkoutDone ?
             <>
