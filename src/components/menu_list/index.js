@@ -5,7 +5,7 @@ import './index.css'
 
 const MenuList = () => {
     const { activeCat, items } = useContext(AppContext);
-    console.log(items);
+
 
     // let itemSubset;
     // items.forEach((item) => {

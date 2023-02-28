@@ -24,7 +24,7 @@ const Nav = () => {
 
      let catsFromMongo = [...res.data];
      catsFromMongo.sort((a,b) => a.sortOrder - b.sortOrder)
-     console.log(catsFromMongo);
+
      setCategories(catsFromMongo)
     }
     getCategories()

@@ -12,7 +12,8 @@ const orderItemSchema = new Schema({
     toJSON: {virtuals: true}
 })
 
-orderItemSchema.virtual('totPrice').get(() => {
+orderItemSchema.virtual('totPrice').get(function() {
+    console.log(this);
     return this.qty * this.item.price;
 })
 

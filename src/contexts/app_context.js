@@ -9,7 +9,16 @@ const AppContextProvider = (props) => {
     const [user, setUser] = useState(false);
     const [items, setItems] = useState([]);
     const [activeCat, setActiveCat] = useState('Sandwiches');
-    const [cart, setCart] = useState({});
+    const [cart, setCart] = useState(
+        {
+            orderId: "",
+            checkoutDone: false,
+            updatedAt: "",
+            orderItems:[],
+            totalQty: 0,
+            orderTotal: 0,
+        }
+    );
  
     return (
         <AppContext.Provider value={{

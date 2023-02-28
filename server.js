@@ -129,14 +129,40 @@ app.get("/get_cart", async (req, res) => {
     res.json(cart)
 })
 
-app.put('/add_to_cart/:itemId/:newQty', async (req, res) => {
-    let { itemId, newQty } = req.params;
+// for the "add" button
 
-    let cart = await Order.getCart(req.session.passport.user._id);
+app.put('/add_to_cart/:itemId', async (req, res) => {
+    let { itemId } = req.params;
+    let userId = req.session.passport.user._id;
+    let cart = await Order.getCart(userId);
+    console.log(cart); 
+    // check if orderItems already has this item (the we will +1)
+    // if not, add it to the array
+    const orderItem = cart.orderItems.find(orderItem => orderItem.item._id.equals(itemId))
 
-    cart.orderItems.find(orderItem => orderItem._id.equals(itemId))
-    // check if this item already exists in the array
+    if (orderItem) {
+        orderItem.qty += 1;
+    } else {
+        const item = await Item.findById(itemId);
+        console.log(item);
+        cart.orderItems.push({
+            qty: 1,
+            item
+        });
+    }
+
+    cart.save()
+    res.send(cart)
 })
+
+// app.put('/add_to_cart/:itemId/:newQty', async (req, res) => {
+//     let { itemId, newQty } = req.params;
+
+//     let cart = await Order.getCart(req.session.passport.user._id);
+
+//     cart.orderItems.find(orderItem => orderItem._id.equals(itemId))
+//     // check if this item already exists in the array
+// })
 
 // catch all route
 app.get('/*', (req, res) => {

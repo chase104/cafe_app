@@ -36,7 +36,6 @@ function App() {
   useEffect(() => {
     const getItems = async () => {
       let response = await axios('/get_items')
-      console.log(response);
       let items = response.data;
       setItems(items)
     }
@@ -55,11 +54,12 @@ function App() {
             method: "GET",
             url: "/get_cart"
           })
-          console.log(response);
           setCart(response.data)
       }
     }
-    getCart()
+    if (user) {
+      getCart()
+    }
   }, [user])
 
   const returnPage = () => {
